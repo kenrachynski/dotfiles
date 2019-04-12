@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+docker run -it --rm --name my-running-irssi -e TERM -u $(id -u):$(id -g) \
+    --log-driver=none \
+    -v $HOME/.irssi:/home/user/.irssi \
+    irssi:alpine

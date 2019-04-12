@@ -1,6 +1,8 @@
 # Local/private config goes in the include
 [include]
-        path = ~/.gitconfig.local
+	path = ~/.gitconfig.local
+	path = ~/projects/git-aliases/aliases.gitconfig
+	path = ~/.config/gitconfig/gitconfig
 [hub]
         protocol = https
 [alias]
@@ -8,19 +10,23 @@
         promote = !$ZSH/bin/git-promote
         wtf     = !$ZSH/bin/git-wtf
         rank-contributors = !$ZSH/bin/git-rank-contributors
-        count   = !git shortlog -sn
+	count   = !git shortlog -sn
+[branch]
+	autosetuprebase = remote
 [color]
         diff = auto
         status = auto
         branch = auto
         ui = true
 [core]
+	autocrlf = input
         excludesfile = ~/.gitignore
         editor = vim
 [apply]
         whitespace = nowarn
 [mergetool]
         keepBackup = false
+	prompt = false
 [difftool]
         prompt = false
 [help]
@@ -31,3 +37,22 @@
         #
         # Setting to git 2.0 default to suppress warning message
         default = simple
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[diff]
+	tool = Kaleidoscope
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
+[merge]
+	tool = Kaleidoscope
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[difftool "sourcetree"]
+	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	trustExitCode = true
